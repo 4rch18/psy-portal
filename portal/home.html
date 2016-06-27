@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Psychology Portal IIITD</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+</head>
+<body>
+	<nav id="navigationbar"></nav>
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="chat">Chat</button>
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="appoint">
+		Book an appointment
+	</button>
+
+	<script>
+		$("#appoint").click(function(){
+  			window.location.href = "appoint.html";
+		});
+		$("#chat").click(function(){
+  			window.location.href = "chat.html";
+		});
+	</script>
+</body>
+</html>
