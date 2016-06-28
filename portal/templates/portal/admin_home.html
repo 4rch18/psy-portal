@@ -1,0 +1,75 @@
+<a href="{% url 'portal:logout' admin.id %}">Logout</a>
+<br>
+
+{% if all %}
+    <ul>
+    {% for x in all %}
+        <li><a href="{% url 'portal:chat' x.id admin.id%}">{{ x.username }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No one is online</p>
+{% endif %}
+
+<h3>Your office hours:</h3>
+{% if office_hours %}
+    <ul>
+    {% for x in office_hours %}
+        <li>{{ x.display }}  <a href="#" onClick= "deleteOfficeHours('{{x.id}}'); return false;" >Delete hours</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<h3>Add office hours:</h3>
+
+<form action="{% url 'portal:addHOurs' admin.id%}" method="POST">
+
+  {% csrf_token %}
+  <div><input type="text" id="time1" size="10" value="Start time" name='start_time'/></div>
+  <div><input type="text" id="time2" size="10" value="End time" name='end_time'/></div>
+  
+  <input type="submit" value="Submit">
+</form>
+
+{% load staticfiles %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+<script src="{% static 'portal/jquery.timePicker.js' %}" ></script>
+<script src="{% static 'portal/jquery.timePicker.min.js' %}" ></script>
+
+
+
+
+<script type="text/javascript">
+  $("#time1").timePicker({
+  startTime: "09.00", // Using string. Can take string or Date object.
+  endTime: new Date(0, 0, 0, 17, 0, 0), // Using Date object here.
+  show24Hours: false,
+  separator: '.',
+  step: 30});
+
+  $("#time2").timePicker({
+  startTime: "09.00", // Using string. Can take string or Date object.
+  endTime: new Date(0, 0, 0, 17, 0, 0), // Using Date object here.
+  show24Hours: false,
+  separator: '.',
+  step: 30});
+
+</script>
+
+<script type="text/javascript">
+    function deleteOfficeHours(office_hours_id)
+    {
+        $.get("/portal/deleteHours/{{admin.id}}/"+office_hours_id+"/", function(data, status)
+        {
+            data = JSON.parse(data);
+            val =data['type'];
+            console.log("Data: " + val + "\nStatus: " + status);
+            if (val==1)
+            {
+                location.reload();
+            }
+        }); 
+    }
+</script>
+
+

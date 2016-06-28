@@ -1,0 +1,34 @@
+<form action="/portal/home/" method="POST">
+  {% csrf_token %}
+  <b>Signup</b>
+  
+  Username:<br>
+  <input type="text" name="username" ><br>
+
+  Password:<br>
+  <input type="password" name="password1" ><br>
+
+  Password(again):<br>
+  <input type="password" name="password2" ><br>
+
+  <input type="submit" value="Signup">
+
+  <input type="hidden" value="signup" name="login_flag">
+</form>
+
+
+
+<form action="/portal/home/" method="POST">
+  {% csrf_token %}
+  <b>Login</b>
+  
+  Username:<br>
+  <input type="text" name="username" ><br>
+
+  Password:<br>
+  <input type="password" name="password" ><br>
+
+  <input type="submit" value="Login">
+
+  <input type="hidden" value="login" name="login_flag">
+</form>

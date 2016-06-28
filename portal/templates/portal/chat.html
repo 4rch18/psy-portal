@@ -1,0 +1,71 @@
+{% if all %}
+    <ul>
+    {% for x in all %}
+        {% if x.by_admin %}
+            <li>{{ x.admin }}(Admin) : {{ x.text }}-----{{x.pub_date}}</li>
+        {% else%}
+            <li>{{ x.client }} : {{ x.text }}-----{{x.pub_date}}</li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You didn't chat until now</p>
+{% endif %}
+
+
+{%if isAdmin %}
+1
+
+<form action="{% url 'portal:admin_chat' client.id admin.id %}" method="POST">
+  {% csrf_token %}
+  <br>
+    <input type="text" name="new_msg"><br>
+    <input type="submit" value="Send">
+</form>
+
+{% else %}
+2
+<form action="{% url 'portal:chat' client.id admin.id %}" method="POST">
+  {% csrf_token %}
+  <br>
+  <input type="text" name="new_msg"><br>
+    <input type="submit" value="Send">
+</form>
+{% endif %}
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<script>
+function afterLoad() {
+
+    setInterval(function(){ myFunction(); }, 10000);
+}
+
+window.onload=afterLoad();
+
+
+function myFunction()
+{
+    $.get("/auth1/pingMe/{{user.id}}/{{adminID}}/", function(data, status)
+        {
+            data = JSON.parse(data);
+            val =data['type'];
+            console.log("Data: " + val + "\nStatus: " + status);
+            if (val==1)
+            {
+                //do nothing
+            }
+            else if(val==2)
+            {
+               location.reload();
+            }
+        }); 
+}
+</script>
+
+
+

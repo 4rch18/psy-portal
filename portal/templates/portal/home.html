@@ -1,0 +1,23 @@
+<p>Hello {{client.username}},{{message}} </p>
+<a href="{% url 'portal:logout' client.id %}">Logout</a>
+<br>
+
+{% if all %}
+    <ul>
+    {% for x in all %}
+        <li>
+        	{{x.username}}
+        	<a href="{% url 'portal:chat' client.id x.id%}">Chat</a>
+        	<a href="{% url 'portal:book' client.id x.id%}">Book appointment</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No one is online</p>
+{% endif %}
+
+
+
+
+
+
