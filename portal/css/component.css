@@ -1,0 +1,148 @@
+*,
+*:after,
+*::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ac-custom {
+	padding: 0 0.5em;
+	max-width: 20px;
+}
+
+.ac-custom h2 {
+	font-size:20px;
+	padding: 0 0 0.5em;
+	margin: 0 0 0.5em;
+	color: #000;
+
+}
+
+.ac-custom ul{
+	list-style: none;
+	padding: 0;
+	margin: 0 auto;
+	color: #000;
+	max-width: 100px;
+}
+
+.ac-custom li {
+	padding: 5px 0;
+	color: #000;
+	position: relative;
+}
+
+
+.ac-custom label {
+	display: inline-block;
+	position: relative;
+	font-size: 20px;
+	padding: 0 0 0 50px;
+	vertical-align: top;
+	color: #000;
+	cursor: pointer;
+	-webkit-transition: color 0.3s;
+	transition: color 0.3s;
+}
+
+.ac-custom input[type="checkbox"],
+.ac-custom input[type="radio"],
+.ac-custom label::before {
+	width: 10px;
+	height: 10px;
+	top: 30%;
+	left: 5px;
+	color: #000;
+	margin-top: -10px;
+	position: absolute;
+	cursor: pointer;
+}
+
+.ac-custom input[type="radio"] {
+	opacity: 0;
+	-webkit-appearance: none;
+	display: inline-block;
+	vertical-align: middle;
+	color: #000;
+	z-index: 10;
+}
+
+.ac-custom label::before {
+	content: '';
+	border: 4px solid black;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.ac-radio label::before {
+	border-radius: 50%;
+}
+
+.ac-custom input[type="checkbox"]:checked + label,
+.ac-custom input[type="radio"]:checked + label {
+	color: #000;
+} 
+
+.ac-custom input[type="checkbox"]:checked + label::before,
+.ac-custom input[type="radio"]:checked + label::before {
+	opacity: 0.9;
+	color: #000;
+}
+
+/* General SVG and path styles */
+
+.ac-custom svg {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 30%;
+	margin-top: -20px;
+	left: 5px;
+	pointer-events: none;
+	color: #000;
+}
+
+.ac-custom svg path {
+	stroke: #000;
+	stroke-width: 13px;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	fill: none;
+}
+
+/* Specific input, SVG and path styles */
+
+/* Circle */
+.ac-circle input[type="radio"],
+.ac-circle label::before {
+	width: 10px;
+	height: 10px;
+	margin-top: 2px;
+	left: 5px;
+	position: absolute;
+}
+
+.ac-circle label::before {
+	background-color: #000;
+	border: none;
+}
+
+.ac-circle svg {
+	width: 20px;
+	height: 20px;
+	left: 2px;
+	margin-top: 0px;
+}
+
+.ac-circle svg path {
+	stroke-width: 10px;
+} 
+
+
+/* Media Queries */
+@media screen and (max-width: 50em) {
+	section {
+		font-size: 30%;
+	}
+}

@@ -2,21 +2,52 @@
 <html>
 <head>
 	<title>Psychology Portal IIITD</title>
-	<!-- Compiled and minified CSS -->
+	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<!-- Compiled and minified JavaScript -->
+<!-- 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style.css"> -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
 	 <style>
-	 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
-	@import 'https://fonts.googleapis.com/css?family=Cormorant';
-	/* 	.days{
-	 		font-size: 30px;
+		@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+		@import 'https://fonts.googleapis.com/css?family=Cormorant';
+		body{
+			background-color: #318884;
+
+		}
+		.container{
+			background-color: #fff;
+			height: 500px;
+			width: 60%;
+			margin:0 auto;
+			margin-top: 60px;
+			-webkit-box-shadow: 0 0 3px #000;
+			box-shadow: 0 0 3px #000;		  	
+		}
+	 	.days{
+	 		font-size: 25px;
 			font-family: 'Cormorant', serif;
 			color: #000;
-	 	}*/
+			padding-left: 10px;
+	 	}
+		.heading{
+			font-size: 35px;
+			text-align: center;
+		}
+		.slots{
+			padding-left: 20px;
+			color: #000;
+			font-size: 20px;
+		}
+		.mdl-button{
+			float: right;
+			margin-right: 10px;
+		}
+
 	 </style>
 </head>
 <body>
@@ -24,9 +55,8 @@
 		<h1 class="heading">Book your appointment</h1>
 		<div class="form1">
 			<form action="#">
-			<p class="days">
-				<!-- <input type="radio" name="group" id="day1" /> -->
-				<label >Day1</label>
+			<p>
+				<label class="days">Day1</label>
 				<div class="slots">
 				    <p>
 				      <input name="group1" type="radio" id="slot1" />
@@ -47,8 +77,7 @@
 			    </div>
 			</p>
 
-			<p class="days">
-			<!-- <input type="radio" name="group" id="day2" /> -->
+			<p>
 				<label class="days">Day2</label>
 				<div class="slots">
 				    <p>
@@ -72,41 +101,34 @@
 		</form>
         
 		</div>
-		<button id="show-dialog" type="button" class="mdl-button">Confirm</button>
+		<!-- <button  type="button" class="mdl-button">Confirm</button> -->
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="show-dialog" type="button">
+		  Confirm
+		</button>
 		<dialog class="mdl-dialog">
 	    <h4 class="mdl-dialog__title">Confirm Appintment</h4>
-	    <div class="mdl-dialog__content">
+	    <!-- <div class="mdl-dialog__content">
 	      <p>
 	        Confirm Appintment
 	      </p>
-	    </div>
+	    </div> -->
 	    <div class="mdl-dialog__actions">
-	      <button type="button" id="show-dialog" class="mdl-button">ok</button>
-	      <button type="button" class="mdl-button close">Cancel</button>
+	      <button type="button" id="show-dialog2" class="mdl-button mdl-js-button mdl-button--raised">ok</button>
+	      <button type="button" class="mdl-button close mdl-js-button mdl-button--raised">Cancel</button>
 	    </div>
 	  </dialog>
 	  <dialog class="mdl-dialog" id="dialog2">
-	    <h3 class="mdl-dialog__title">Appointment Booked</h3>
+	    <h3 class="mdl-dialog__title">Appointment Confirmed</h3>
 	    <div class="mdl-dialog__content">
 	      <p>
-	        Be there!
+	        Your slot has been Booked. Be there!
 	      </p>
 	    </div>
+	    <div class="mdl-dialog__actions">
+	    	<button type="button" id="show-dialog3" class="mdl-button mdl-js-button mdl-button--raised ok">ok</button>
+	    </div>
+	   </dialog> 
 	</div>
-
-<!-- 	<div class="input-field col s12">
-    <select multiple>
-      <optgroup label="team 1">
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-      </optgroup>
-      <optgroup label="team 2">
-        <option value="3">Option 3</option>
-        <option value="4">Option 4</option>
-      </optgroup>
-    </select>
-    <label>Optgroups</label>
-  </div> -->
 	<script>
 	    var dialog = document.querySelector('dialog');
 	    var showDialogButton = document.querySelector('#show-dialog');
@@ -119,17 +141,21 @@
 	    dialog.querySelector('.close').addEventListener('click', function() {
 	      dialog.close();
 	    });
-	    var dialog2 = document.querySelector('dialog2');
-	    var showDialogButton2 = document.querySelector('#show-dialog');
+
+	    var dialog2 = document.querySelector('dialog');
+	    var showDialogButton2 = document.querySelector('#show-dialog2');
 	    if (! dialog2.showModal) {
 	      dialogPolyfill.registerDialog(dialog2);
 	    }
 	    showDialogButton2.addEventListener('click', function() {
 	      dialog2.showModal();
 	    });
-	    dialog.querySelector('.mdl-button').addEventListener('click', function() {
-	      dialog.showModal();
+	    dialog.querySelector('.ok').addEventListener('click', function() {
+	      dialog.close();
 	    });
+	    $("#show-dialog2").click(function(){
+	    	alert(dialog2);
+		});
 	</script>
   </body>
 </html>
