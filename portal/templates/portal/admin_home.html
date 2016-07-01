@@ -1,14 +1,44 @@
-<a href="{% url 'portal:logout' admin.id %}">Logout</a>
+<a href="{% url 'portal:logout' %}">Logout</a>
 <br>
 
 {% if all %}
     <ul>
     {% for x in all %}
-        <li><a href="{% url 'portal:chat' x.id admin.id%}">{{ x.username }}</a></li>
+        <li>{{x.username}}
+        <a href="{% url 'portal:admin_chat' x.id admin.id%}">Chat</a>
+        <a href="{% url 'portal:admin_call' x.id admin.id%}">Call</a>
+        {% if allAppointments %}
+            {% for y in allAppointments %}
+                {% if x == y.client %}
+                    {% if y.status == 'booked' %}
+                        Appointmented at {{y.slot.display}}
+                    {% elif y.status == 'pending' %}
+                        Pending appointment request at {{y.slot.display}}
+                        
+                        <form action="{% url 'portal:acceptRequest' x.id admin.id%}" method="POST">
+                            {% csrf_token %}
+                             <input type="hidden" value="accept" name="accept_flag">
+                            <input type="submit" value="Accept">
+                        </form>
+
+                        <form action="{% url 'portal:acceptRequest' x.id admin.id%}" method="POST">
+                            {% csrf_token %}
+                             <input type="hidden" value="decline" name="accept_flag">
+                            <input type="submit" value="Decline">
+                        </form>
+                    {% else %}
+                          No appointment
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            No appointment
+        {% endif %}
+        </li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No one is online</p>
+    <p>No client</p>
 {% endif %}
 
 <h3>Your office hours:</h3>
@@ -25,8 +55,8 @@
 <form action="{% url 'portal:addHOurs' admin.id%}" method="POST">
 
   {% csrf_token %}
-  <div><input type="text" id="time1" size="10" value="Start time" name='start_time'/></div>
-  <div><input type="text" id="time2" size="10" value="End time" name='end_time'/></div>
+  <div>Start time: <input type="text" id="time1" size="10" value="" name='start_time'/></div>
+  <div>End time: <input type="text" id="time2" size="10" value="" name='end_time'/></div>
   
   <input type="submit" value="Submit">
 </form>
@@ -73,3 +103,30 @@
 </script>
 
 
+<script>
+function afterLoad() {
+
+        setInterval(function(){ myFunction(); }, 10000);
+
+}
+
+window.onload=afterLoad();
+
+function myFunction()
+{
+    $.get("/portal/admin_polling_home/{{admin.id}}/", function(data, status)
+        {
+            data = JSON.parse(data);
+            val =data['type'];
+            console.log("Data: " + val + "\nStatus: " + status);
+            if (val==1)
+            {
+                //do nothing
+            }
+            else if(val==2)
+            {
+               location.reload();
+            }
+        }); 
+}
+</script>

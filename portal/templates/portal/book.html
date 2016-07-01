@@ -1,39 +1,47 @@
-{% if slots %}
-    <ul>
-    {% for x in slots %}
-    	{% if x.is_booked %}
-        	<li> <font color="red">{{x.display}}</font>  {{message}}</li>
-        {% else %}
-        	<li> <font color="green">{{x.display}}</font>  {{message}}</li>
-        {% endif %}
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No time slot</p>
-{% endif %}
-
-<form action="{% url 'portal:home' %}" method="POST">
-{% csrf_token %}
-  <input list="slot_list" name="slot_time">
-  	{% if slots %}
-  		<datalist id="slot_list">
-	    <ul>
-	    {% for x in slots %}
-	        <option value="{{x.display}}">
-	    {% endfor %}
-	    </ul>
-	   </datalist>
-	   <input type="submit" value="Submit">
-
-     <input type="hidden" value="{{client.id}}" name="clientID">
-     <input type="hidden" value="{{admin.id}}" name="adminID">
-     <input type="hidden" value="redirect" name="login_flag">
-  {% else %}
+{% if flag %}      
+      You already have an apointment from {{appointment_at.slot}}
+      <br>
       <button onclick="goBack()">Back</button>
+{% else %}
+      {% if slots %}
+          <ul>
+          {% for x in slots %}
+          	{% if x.is_free %}
+              	<li> <font color="green">{{x.display}}</font></li>
+              {% else %}
+              	<li> <font color="red">{{x.display}}</font></li>
+              {% endif %}
+          {% endfor %}
+          </ul>
+      {% else %}
+          <p>No time slot</p>
+      {% endif %}
 
-	{% endif %}
-  
-</form>
+      <form action="{% url 'portal:home' %}" method="POST">
+      {% csrf_token %}
+        <input list="slot_list" name="slot_time">
+        	{% if slots %}
+        		<datalist id="slot_list">
+      	    <ul>
+      	    {% for x in slots %}
+                {% if x.is_free %}              
+      	            <option value="{{x.display}}">
+                {% endif %}
+      	    {% endfor %}
+      	    </ul>
+      	   </datalist>
+      	   <input type="submit" value="Submit">
+
+           <input type="hidden" value="{{admin.id}}" name="adminID">
+           <input type="hidden" value="{{client.id}}" name="clientID"> 
+           <input type="hidden" value="redirect" name="login_flag">
+        {% else %}
+            <button onclick="goBack()">Back</button>
+
+      	{% endif %}
+        
+      </form>
+{% endif %}
 
 <script>
 function goBack() {
