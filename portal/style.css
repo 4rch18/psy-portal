@@ -1,0 +1,114 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+@import 'https://fonts.googleapis.com/css?family=Cormorant';
+
+body{
+	background-color: #318884;
+
+}
+.container{
+	background-color: #ffffff;
+	width: 800px;
+	height: 500px;
+	position: relative;
+	margin:0 auto;
+	margin-top: 50px;
+  	
+}
+.chatbox{
+	background-color: #D3D3D3;
+	width: 600px;
+	height: 500px;
+	float: right;
+	border-left: 1px solid #000000;
+	padding: 0px;
+
+}
+
+.user1, .user2{
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+}
+.content{
+	font-weight: normal;
+	font-size: 20px;
+	font-family: 'Cormorant', serif;
+  	border-bottom: 1px solid black;
+}
+.content: active{
+	opacity: 0.75;
+}
+.user1,.user1 >.content{
+	background-color: #ffffff;
+}
+.user2, .user2 >.content{
+	background-color: #b3ffff;
+	
+}
+.timestamp{
+	font-weight: bold;
+	color: #D3D3D3;
+	font-size: 10px;
+}
+.textfield{
+	position: absolute;
+	bottom: 0px;
+	background-color: #ffffff;
+	width: 600px;
+}
+.mdl-textfield, .mdl-js-textfield{
+	background-color: white;
+	width: 600px;
+}
+#sample5{
+width: 600px;
+}
+.mdl-button, .mdl-js-button, .mdl-button--fab ,.mdl-button--mini-fab, .mdl-button--colored{
+	float: right;
+	margin-right: 20px;
+}
+.list{
+	display: block;
+	text-decoration: none;
+	height: 500px;
+	width: 199px;
+	float: left;
+}
+ul{
+	list-style-type: none;
+	float: left;
+	padding: 5px;
+	margin: 0;
+}
+li{
+	font-size: 20px;
+	font-family: 'Cormorant', serif;
+	font-weight: bold;
+	border-bottom: 0.5px solid black;
+
+
+}
+li:hover{
+	background-color: #99ffd6;
+	color: #ffffff;
+}
+li:active{
+	background-color: #99ffd6;
+	opacity: 1;
+}
+
+/*li:before{
+	position: absolute;
+	content: "";
+	background-color: rgb(0,1,0);
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+}*/
+.heading{
+	font-size: 30px;
+	text-align: center;
+}
+.slots{
+	padding-left: 20px;
+}

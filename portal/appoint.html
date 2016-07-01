@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Psychology Portal IIITD</title>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+<!-- 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style.css"> -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+	 <style>
+		@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+		@import 'https://fonts.googleapis.com/css?family=Cormorant';
+		body{
+			background-color: #318884;
+
+		}
+		.container{
+			background-color: #fff;
+			height: 500px;
+			width: 60%;
+			margin:0 auto;
+			margin-top: 60px;
+			-webkit-box-shadow: 0 0 3px #000;
+			box-shadow: 0 0 3px #000;		  	
+		}
+	 	.days{
+	 		font-size: 25px;
+			font-family: 'Cormorant', serif;
+			color: #000;
+			padding-left: 10px;
+	 	}
+		.heading{
+			font-size: 35px;
+			text-align: center;
+		}
+		.slots{
+			padding-left: 20px;
+			color: #000;
+			font-size: 20px;
+		}
+		.mdl-button{
+			float: right;
+			margin-right: 10px;
+		}
+
+	 </style>
+</head>
+<body>
+	<div class="container">
+		<h1 class="heading">Book your appointment</h1>
+		<div class="form1">
+			<form action="#">
+			<p>
+				<label class="days">Day1</label>
+				<div class="slots">
+				    <p>
+				      <input name="group1" type="radio" id="slot1" />
+				      <label for="slot1">slot1</label>
+				    </p>
+				    <p>
+				      <input name="group1" type="radio" id="slot2" />
+				      <label for="slot2">slot2</label>
+				    </p>
+				    <p>
+				      <input name="group1" type="radio" id="slot3"  />
+				      <label for="slot3">slot3</label>
+				    </p>
+				      <p>
+				        <input name="group1" type="radio" id="slot4" disabled="disabled" />
+				        <label for="slot4">slot4</label>
+				    </p>
+			    </div>
+			</p>
+
+			<p>
+				<label class="days">Day2</label>
+				<div class="slots">
+				    <p>
+				      <input name="group1" type="radio" id="slot5" />
+				      <label for="slot5">slot1</label>
+				    </p>
+				    <p>
+				      <input name="group1" type="radio" id="slot6" />
+				      <label for="slot6">slot2</label>
+				    </p>
+				    <p>
+				      <input name="group1" type="radio" id="slot7"  />
+				      <label for="slot7">slot3</label>
+				    </p>
+				      <p>
+				        <input name="group1" type="radio" id="slot8" disabled="disabled" />
+				        <label for="slot8">slot4</label>
+				    </p>
+			    </div>
+			</p>
+		</form>
+        
+		</div>
+		<!-- <button  type="button" class="mdl-button">Confirm</button> -->
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="show-dialog" type="button">
+		  Confirm
+		</button>
+		<dialog class="mdl-dialog">
+	    <h4 class="mdl-dialog__title">Confirm Appintment</h4>
+	    <!-- <div class="mdl-dialog__content">
+	      <p>
+	        Confirm Appintment
+	      </p>
+	    </div> -->
+	    <div class="mdl-dialog__actions">
+	      <button type="button" id="show-dialog2" class="mdl-button mdl-js-button mdl-button--raised">ok</button>
+	      <button type="button" class="mdl-button close mdl-js-button mdl-button--raised">Cancel</button>
+	    </div>
+	  </dialog>
+	  <dialog class="mdl-dialog" id="dialog2">
+	    <h3 class="mdl-dialog__title">Appointment Confirmed</h3>
+	    <div class="mdl-dialog__content">
+	      <p>
+	        Your slot has been Booked. Be there!
+	      </p>
+	    </div>
+	    <div class="mdl-dialog__actions">
+	    	<button type="button" id="show-dialog3" class="mdl-button mdl-js-button mdl-button--raised ok">ok</button>
+	    </div>
+	   </dialog> 
+	</div>
+	<script>
+	    var dialog = document.querySelector('dialog');
+	    var showDialogButton = document.querySelector('#show-dialog');
+	    if (! dialog.showModal) {
+	      dialogPolyfill.registerDialog(dialog);
+	    }
+	    showDialogButton.addEventListener('click', function() {
+	      dialog.showModal();
+	    });
+	    dialog.querySelector('.close').addEventListener('click', function() {
+	      dialog.close();
+	    });
+
+	    var dialog2 = document.querySelector('dialog');
+	    var showDialogButton2 = document.querySelector('#show-dialog2');
+	    if (! dialog2.showModal) {
+	      dialogPolyfill.registerDialog(dialog2);
+	    }
+	    showDialogButton2.addEventListener('click', function() {
+	      dialog2.showModal();
+	    });
+	    dialog.querySelector('.ok').addEventListener('click', function() {
+	      dialog.close();
+	    });
+	    $("#show-dialog2").click(function(){
+	    	alert(dialog2);
+		});
+	</script>
+  </body>
+</html>
