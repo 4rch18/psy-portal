@@ -403,7 +403,7 @@ def chat(request, clientID, adminID):
             'admin':currentAdmin,
             'isAdmin': False,
         }
-        return render(request, 'portal/chat.html', context)
+        return render(request, 'portal/p_chat.html', context)
     else:
         context={
             'err':'Invalid authorization'
@@ -437,7 +437,7 @@ def admin_chat(request, clientID, adminID):
             'admin':currentAdmin,
             'isAdmin': True,
         }
-        return render(request, 'portal/chat.html', context)
+        return render(request, 'portal/p_chat.html', context)
     else:
         context={
             'err':'Invalid authorization'
