@@ -1,0 +1,149 @@
+
+  {% extends 'base.html' %}
+  {% block included_files %}
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <style>
+    .demo-list {
+      width: 650px;
+    }
+    .demo-card-wide.mdl-card {
+      width: 750px;
+      height: 500px;
+      margin: 0 auto;
+      margin-top: 50px;
+    }
+    .demo-card-wide > .mdl-card__title {
+      color: #fff;
+      height: 176px;
+/*    background: url('../assets/demos/welcome_card.jpg') center / cover;
+*/  }
+    .demo-card-wide > .mdl-card__menu {
+      color: #fff;
+    }
+    .time{
+        color: #c0c0c0;
+        
+    }
+    .mdl-textfield {
+        width: 650px;
+
+    }
+    .mdl-button {
+        margin-bottom:0px;
+        margin-right: 0px;
+    }
+    .card2{
+        width: 650px;
+        height: 100px;
+        margin-bottom:0px;
+
+    }
+    #forms{
+    margin-bottom: 0px;
+    }
+    .card3{
+        margin:0 auto;
+        margin-top: 50px;
+        height: 500px;
+        width: calc(20%);
+        margin-right:calc(-10%);
+    }
+    /*.mdl-card__title{
+        height: calc(80% -5)
+    }*/
+    .buttons{
+        margin: 0 auto;
+        padding-top: 10px;
+        width: 30px;
+
+    }
+    .mdl-grid{
+        margin-top: 40px;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+  <button onclick="goBack()">Back</button>
+    <div class="mdl-grid portfolio-max-width">
+    {% block grid %}    
+        <div class="mdl-grid mdl-cell mdl-cell--12-col mdl-cell--2-col-tablet mdl-card mdl-shadow--4dp">
+            <div class="mdl-card mdl-shadow--2dp card3 mdl-cell--1-col-tablet">
+              {% block card_left %}
+                  <div class="mdl-card__title">
+                    <h2 class="mdl-card__title-text">
+                      {% block card_left_title %}
+
+                      {% endblock %}
+                      </h2>
+
+                  </div>
+                  <div class="mdl-card__supporting-text">
+                    {% block card_left_supporting_text %}
+                    <ul class="demo-list-icon mdl-list">
+
+                      {% block card_left_supporting_text_list %}
+
+                      {% endblock %}
+                    </ul>
+                    {% endblock %}
+                  </div>
+                  <div class="mdl-card__actions mdl-card--border">
+                    
+                  </div>
+                  <!-- <div class="mdl-card__menu">
+                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                      <i class="material-icons">share</i>
+                    </button>
+                  </div> -->
+                  <div class="buttons">
+                    {% block card_left_buttons %}
+
+                      {% endblock %}
+                    </div>    
+                {% endblock %}
+            </div>
+
+            <div class="demo-card-wide mdl-card mdl-shadow--2dp mdl-cell mdl-cell--2-col-tablet">
+             {% block card_right %}
+              <div class="mdl-card__supporting-text">
+                    
+                {% block card_right_supporting_text %}    
+
+ 
+                {% endblock %}    
+                    
+                    
+
+                    
+            </div>
+
+                <div class="mdl-card__actions mdl-card--border">
+                <!--  <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                   Get Started
+                 </a> -->
+                </div>
+
+                <div class="mdl-card__menu">
+                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">share</i>
+                    </button>
+                </div>
+                <div class="mdl-card card2">
+                    {% block card_right_bottom %}    
+                    
+                    {% endblock %}    
+                </div>  
+            
+             {% endblock %}
+            </div>
+            
+    </div>
+    {% endblock %}
+</div>
+
+    
+  {% endblock %}
