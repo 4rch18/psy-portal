@@ -397,7 +397,9 @@ def chat(request, clientID, adminID):
             return HttpResponseRedirect(reverse('portal:chat', args=(clientID,adminID,)))
         
         allQueries=Query.objects.filter(admin_id=adminID,client_id=clientID)
+        allAdmins = MyUser.objects.filter(is_admin=True)
         context={
+            'sideList': allAdmins,
             'all':allQueries,
             'client':currentClient,
             'admin':currentAdmin,
@@ -431,7 +433,9 @@ def admin_chat(request, clientID, adminID):
             return HttpResponseRedirect(reverse('portal:admin_chat', args=(clientID,adminID,)))
         
         allQueries=Query.objects.filter(admin_id=adminID,client_id=clientID)
+        allClients = MyUser.objects.filter(is_admin=False)
         context={
+            'sideList': allClients,
             'all':allQueries,
             'client':currentClient,
             'admin':currentAdmin,
