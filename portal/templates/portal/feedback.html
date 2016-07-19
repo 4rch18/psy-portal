@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
+
+{% load staticfiles %}
+
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
@@ -9,10 +12,13 @@
 		<meta name="keywords" content="form, minimal, interface, single input, big form, responsive form, transition" />
 		<meta name="author" content="Codrops" />
 		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="css/feedbacknormalize.css" />
-		<link rel="stylesheet" type="text/css" href="css/feedbackdemo.css" />
-		<link rel="stylesheet" type="text/css" href="css/feedbackcomponent.css" />
-		<script src="js/feedbackmodernizr.custom.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="{% static 'portal/css/feedbacknormalize.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'portal/css/feedbackdemo.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'portal/css/feedbackcomponent.css' %}" />
+
+		<script src="{% static 'portal/js/feedbackmodernizr.custom.js' %}" ></script>
+
 	</head>
 	<body>
 		<div class="container">
@@ -45,7 +51,7 @@
 								<input id="q6" name="q6" type="text"/>
 							</li>
 						</ol><!-- /questions -->
-						<button class="submit" type="submit">Send answers</button>
+						<button class="submit" type="submit" >Send answers</button>
 						<div class="controls">
 							<button class="next"></button>
 							<div class="progress"></div>
@@ -61,8 +67,13 @@
 			</section>
 			
 		</div><!-- /container -->
-		<script src="js/feedbackclassie.js"></script>
-		<script src="js/feedbackstepsForm.js"></script>
+
+		
+
+		<script src="{% static 'portal/js/feedbackclassie.js' %}" ></script>
+		<script src="{% static 'portal/js/feedbackstepsForm.js' %}" ></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 		<script>
 			var theForm = document.getElementById( 'theForm' );
 
@@ -81,8 +92,46 @@
 					var messageEl = theForm.querySelector( '.final-message' );
 					messageEl.innerHTML = 'Thank you! We\'ll be in touch.';
 					classie.addClass( messageEl, 'show' );
+					myFunction();
 				}
 			} );
+
+			function myFunction()
+			{
+			    var fetch = true;
+				var url = '/portal/addFB/{{client.id}}/';
+				var a1 = document.getElementById('q1').value;
+				var a2 = document.getElementById('q2').value;
+				var a3 = document.getElementById('q3').value;
+				var a4 = document.getElementById('q4').value;
+				var a5 = document.getElementById('q5').value;
+				var a6 = document.getElementById('q6').value;
+				$.ajax(
+				{
+				    type : 'post',
+				    url : url,
+				    dataType : 'json', // expected returned data format.
+				    data : 
+				    {
+				    	'a1':a1,
+				    	'a2':a2,
+				    	'a3':a3,
+				    	'a4':a4,
+				    	'a5':a5,
+				    	'a6':a6,
+				        'fetch' : fetch // You might want to indicate what you're requesting.
+				    },
+				    success : function(data)
+				    {
+				        // This happens AFTER the backend has returned an JSON array (or other object type)
+				    },
+				    complete : function(data)
+				    {
+				        // do something, not critical.
+				    }
+				});
+			}
+
 		</script>
 	</body>
 </html>

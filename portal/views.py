@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from datetime import datetime
+#for csrf extempt
+from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
@@ -14,7 +16,7 @@ from django.contrib.auth.models import User
 import json
 
 
-from .models import MyUser, Query, OfficeHour, TimeSlot, Appointment
+from .models import MyUser, Query, OfficeHour, TimeSlot, Appointment, Feedback
 
 
 def index(request):
@@ -22,9 +24,9 @@ def index(request):
     return render(request, 'portal/index.html', context)
 
 
-def home(request, clientID_from_url=None):
+def home(request, userID_from_url=None):
     
-    if clientID_from_url is None :
+    if userID_from_url is None :
         flag=request.POST.get('login_flag')
         
 
@@ -122,7 +124,7 @@ def home(request, clientID_from_url=None):
                     }
                     return render(request, 'portal/home.html', context)
 
-        elif(flag=='redirect'):
+        elif(flag == 'after_book'):
             try:
                 t=request.session['user_id']
             except KeyError:
@@ -155,6 +157,25 @@ def home(request, clientID_from_url=None):
                     'err':'Invalid authorization'
                 }
                 return render(request, 'portal/error.html', context)
+
+
+        elif(flag == 'redirect'):
+            try:
+                t=request.session['user_id']
+            except KeyError:
+                context1={
+                    'err':'Please login to access the portal',
+                    'link':"portal:index",
+                }
+                return render(request, 'portal/error.html', context1)
+            userID=request.POST.get('userID')
+            if str(request.session['user_id']) == str(userID):
+                return HttpResponseRedirect(reverse('portal:home', args=(userID,)))
+            else:
+                context={
+                    'err':'Invalid authorization'
+                }
+                return render(request, 'portal/error.html', context)
             
 
     else:
@@ -167,20 +188,42 @@ def home(request, clientID_from_url=None):
             }
             return render(request, 'portal/error.html', context1)
 
-        clientID=clientID_from_url
-        if str(request.session['user_id']) == str(clientID):
-            currentClient=MyUser.objects.get(pk=clientID)
-            
-            allAdmins= MyUser.objects.filter(is_admin=True)                                                             
-            allAppointments=Appointment.objects.filter(client=currentClient)     
+        userID=userID_from_url
 
-            context={
-                'client':currentClient,
-                'all':allAdmins,
-                'message':'you are logged in',
-                'allAppointments':allAppointments,
-            }
-            return render(request, 'portal/home.html', context)
+        if str(request.session['user_id']) == str(userID):
+            currentUser=MyUser.objects.get(pk=userID)
+                
+            
+            if currentUser.is_admin:
+                adminID=userID
+                currentAdmin=MyUser.objects.get(pk=adminID)
+
+                allClients=MyUser.objects.filter(is_admin=False)
+                officeHours= OfficeHour.objects.filter(admin=currentAdmin)
+                allAppointments=Appointment.objects.filter(admin=currentAdmin)
+                context={
+                    'admin':currentAdmin,
+                    'all':allClients,
+                    'office_hours':officeHours,
+                    'allAppointments':allAppointments,
+                }
+                return render(request, 'portal/admin_home.html', context)
+
+            else:
+                clientID=userID
+                currentClient=MyUser.objects.get(pk=clientID)
+                
+                allAdmins= MyUser.objects.filter(is_admin=True)                                                             
+                allAppointments=Appointment.objects.filter(client=currentClient)     
+
+                context={
+                    'client':currentClient,
+                    'all':allAdmins,
+                    'message':'you are logged in',
+                    'allAppointments':allAppointments,
+                }
+                return render(request, 'portal/home.html', context)
+
         else:
             context={
                 'err':'Invalid authorization'
@@ -567,48 +610,175 @@ def my_logout(request):
 
 
 def getData(request, clientID, adminID):
+    try:
+        t=request.session['user_id']
+    except KeyError:
+        context1={
+            'err':'Please login to access the portal',
+            'link':"portal:index",
+        }
+        return render(request, 'portal/error.html', context1)
+    if str(request.session['user_id']) == str(clientID):
+        temp2=MyUser.objects.get(pk=adminID)
+        
+        if(temp2.sent_new_text == False):
+            data={'type':'1','sub-type':'blank'}
+        else:
+            MyUser.objects.filter(pk=adminID).update(sent_new_text=False)
+            data={'type':'2','sub-type':'blank'}
 
-    
-    temp2=MyUser.objects.get(pk=adminID)
-    
-    if(temp2.sent_new_text == False):
-        data={'type':'1','sub-type':'blank'}
+        return HttpResponse(json.dumps(data))
     else:
-        MyUser.objects.filter(pk=adminID).update(sent_new_text=False)
-        data={'type':'2','sub-type':'blank'}
-
-    return HttpResponse(json.dumps(data))
+        context={
+            'err':'Invalid authorization'
+        }
+        return render(request, 'portal/error.html', context)
 
 
 def admin_getData(request, clientID, adminID):
-    temp=MyUser.objects.get(pk=clientID)
+    try:
+        t=request.session['user_id']
+    except KeyError:
+        context1={
+            'err':'Please login to access the portal',
+            'link':"portal:index",
+        }
+        return render(request, 'portal/error.html', context1)
+    if str(request.session['user_id']) == str(adminID):
+        temp=MyUser.objects.get(pk=clientID)
 
-    if(temp.sent_new_text == False):
-        data={'type':'1','sub-type':'blank'}
+        if(temp.sent_new_text == False):
+            data={'type':'1','sub-type':'blank'}
+        else:
+            MyUser.objects.filter(pk=clientID).update(sent_new_text=False)
+            data={'type':'2','sub-type':'blank'}
+
+        return HttpResponse(json.dumps(data))
     else:
-        MyUser.objects.filter(pk=clientID).update(sent_new_text=False)
-        data={'type':'2','sub-type':'blank'}
-
-    return HttpResponse(json.dumps(data))
+        context={
+            'err':'Invalid authorization'
+        }
+        return render(request, 'portal/error.html', context)
 
 
 def polling_home(request, clientID):
-    currentClient=MyUser.objects.get(pk=clientID)
-    if currentClient.status_appointment_changed == False:
-        data={'type':'1','sub-type':'blank'}
-    else:
-        MyUser.objects.filter(pk=clientID).update(status_appointment_changed=False)
-        data={'type':'2','sub-type':'blank'}
+    try:
+        t=request.session['user_id']
+    except KeyError:
+        context1={
+            'err':'Please login to access the portal',
+            'link':"portal:index",
+        }
+        return render(request, 'portal/error.html', context1)
+    if str(request.session['user_id']) == str(clientID):
+        currentClient=MyUser.objects.get(pk=clientID)
+        if currentClient.status_appointment_changed == False:
+            data={'type':'1','sub-type':'blank'}
+        else:
+            MyUser.objects.filter(pk=clientID).update(status_appointment_changed=False)
+            data={'type':'2','sub-type':'blank'}
 
-    return HttpResponse(json.dumps(data))
+        return HttpResponse(json.dumps(data))
+    else:
+        context={
+            'err':'Invalid authorization'
+        }
+        return render(request, 'portal/error.html', context)
 
 
 def admin_polling_home(request, adminID):
-    currentAdmin=MyUser.objects.get(pk=adminID)
-    if currentAdmin.status_appointment_changed == False:
-        data={'type':'1','sub-type':'blank'}
-    else:
-        MyUser.objects.filter(pk=adminID).update(status_appointment_changed=False)
-        data={'type':'2','sub-type':'blank'}
+    try:
+        t=request.session['user_id']
+    except KeyError:
+        context1={
+            'err':'Please login to access the portal',
+            'link':"portal:index",
+        }
+        return render(request, 'portal/error.html', context1)
+    if str(request.session['user_id']) == str(adminID):
+        currentAdmin=MyUser.objects.get(pk=adminID)
+        if currentAdmin.status_appointment_changed == False:
+            data={'type':'1','sub-type':'blank'}
+        else:
+            MyUser.objects.filter(pk=adminID).update(status_appointment_changed=False)
+            data={'type':'2','sub-type':'blank'}
 
-    return HttpResponse(json.dumps(data))
+        return HttpResponse(json.dumps(data))
+    else:
+        context={
+            'err':'Invalid authorization'
+        }
+        return render(request, 'portal/error.html', context)
+
+
+def feedback(request, clientID):
+    try:
+        t=request.session['user_id']
+    except KeyError:
+        context1={
+            'err':'Please login to access the portal',
+            'link':"portal:index",
+        }
+        return render(request, 'portal/error.html', context1)
+    if str(request.session['user_id']) == str(clientID):
+        currentClient=MyUser.objects.get(pk=clientID)
+        context={
+        'client':currentClient,
+        }
+        return render(request, 'portal/feedback.html', context)
+    else:
+        context={
+            'err':'Invalid authorization'
+        }
+        return render(request, 'portal/error.html', context)
+
+
+@csrf_exempt
+def addFB(request, clientID):
+    try:
+        t=request.session['user_id']
+    except KeyError:
+        context1={
+            'err':'Please login to access the portal',
+            'link':"portal:index",
+        }
+        return render(request, 'portal/error.html', context1)
+    if str(request.session['user_id']) == str(clientID):
+        currentClient=MyUser.objects.get(pk=clientID)
+        if request.method == 'POST':
+            rec=json.load(request.body)
+            a1=rec['a1']
+            a2=rec['a2']
+            a3=rec['a3']
+            a4=rec['a4']
+            a5=rec['a5']
+            a6=rec['a6']
+            temp = Feedback.objects.create(client = currentClient, ans1=a1,ans2=a2,ans3=a3,ans4=a4,ans5=a5,ans6=a6)
+            data={'type':'1','sub-type':'success'}
+        else:
+            data={'type':'1','sub-type':'error'}
+        return HttpResponse(json.dumps(data))
+    else:
+        context={
+            'err':'Invalid authorization'
+        }
+        return render(request, 'portal/error.html', context)
+
+
+
+def about(request, userID):
+    try:
+        t=request.session['user_id']
+    except KeyError:
+        context1={
+            'err':'Please login to access the portal',
+            'link':"portal:index",
+        }
+        return render(request, 'portal/error.html', context1)
+    if str(request.session['user_id']) == str(userID):
+        currentUser=MyUser.objects.get(pk=userID)
+        context={
+            'msg':'Information about the portal',
+            'user': currentUser, 
+        }
+        return render(request, 'portal/about.html', context)

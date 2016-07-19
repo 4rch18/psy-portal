@@ -57,3 +57,16 @@ class Appointment(models.Model):
 
 	def __str__(self):
 		return self.status
+
+
+class Feedback(models.Model):
+	client=models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='client_feedback')
+	admin=models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='admin_feedback', null = True)
+	ans1=models.CharField(max_length=100)
+	ans2=models.CharField(max_length=100)
+	ans3=models.CharField(max_length=100)
+	ans4=models.CharField(max_length=100)
+	ans5=models.CharField(max_length=100)
+	ans6=models.CharField(max_length=100)
+	
+	

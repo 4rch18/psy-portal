@@ -35,11 +35,11 @@
                         <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
                           <i class="material-icons">feedback</i>
                         </a>
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                        <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
                           <i class="material-icons">videocam</i>
                         </a>
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect">
-                          <i class="material-icons">person add</i>
+                        <a class="mdl-button  mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                          <i class="material-icons">person_add</i>
                         </a>
                       {% endblock %}
 
@@ -177,10 +177,18 @@ function adminFunction()
 </script>
 
 
-<script>
+<script >
 function goBack() {
     window.history.back();
 }
 </script>
 
+<script>
+// $("#scroll_bottom").animate({ scrollTop: $(document).height()+1000 }, "slow");
+document.getElementById('scroll_bottom').scrollTop = 99999999999;
+</script>
+
+
+
 {% endblock %}
+

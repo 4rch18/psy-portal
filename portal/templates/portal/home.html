@@ -1,3 +1,9 @@
+{% include "navbar.html" with user=client %}
+
+<br>
+<br>
+<br>
+<br>
 <p>Hello {{client.username}},{{message}} </p>
 <a href="{% url 'portal:logout' %}">Logout</a>
 <br>
@@ -36,6 +42,7 @@
 {% endif %}
 
 
+<a href="{% url 'portal:feedback' client.id %}">Feedback</a>
 
 <script>
 function goBack() {
@@ -73,3 +80,4 @@ function myFunction()
         }); 
 }
 </script>
+

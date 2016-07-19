@@ -1,0 +1,71 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+@import 'https://fonts.googleapis.com/css?family=Cormorant';
+
+
+body{
+	background-color: rgb(220,220,220);
+
+}
+	.mdl-grid{
+		background-color: rgb(220,220,220);
+	}
+	.demo-list {
+	  width: 650px;
+	}
+	.demo-card-wide.mdl-card {
+	  width: 750px;
+	  height: 500px;
+	  margin: 0 auto;
+	  margin-top: 50px;
+	}
+	.demo-card-wide > .mdl-card__title {
+	  color: #fff;
+	  height: 176px;
+	}
+	.demo-card-wide > .mdl-card__menu {
+	  color: #fff;
+	}
+	.time{
+		color: #c0c0c0;
+		
+	}
+	.mdl-textfield {
+		width: 650px;
+
+	}
+	.mdl-button {
+		margin-bottom:0px;
+		margin-right: 0px;
+	}
+	.card2{
+		width: 650px;
+		height: 100px;
+		margin-bottom:0px;
+
+	}
+	#forms{
+	margin-bottom: 0px;
+	}
+	.card3{
+	  	margin:0 auto;
+	  	margin-top: 50px;
+		height: 500px;
+    	width: calc(20%);
+    	margin-right:calc(-10%);
+	}
+	/*.mdl-card__title{
+		height: calc(80% -5)
+	}*/
+	.buttons{
+		margin: 0 auto;
+		padding-top: 10px;
+		width: 30px;
+
+	}
+	.mdl-grid{
+		margin-top: 40px;
+	}
+	.chatting{
+
+		
+	}
