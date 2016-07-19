@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Psychology Portal IIITD</title>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+<!-- 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="style.css"> -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+	 <style>
+		@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+		@import 'https://fonts.googleapis.com/css?family=Cormorant';
+		body{
+			background-color: #9999ff;
+
+		}
+		.container{
+			background-color: rgba(255,255,255,0.85);
+			height: 500px;
+			width: 60%;
+			margin:0 auto;
+			margin-top: 60px;
+			-webkit-box-shadow:0 0 150px rgba(0,0,0,0.5);
+			box-shadow: 0 0 150px rgba(0,0,0,0.5);	
+			border-radius: 10px;	  	
+		}
+	 	.days{
+	 		font-size: 25px;
+			font-family: 'Cormorant', serif;
+			color: #000;
+			padding-left: 2vw;
+	 	}
+		.heading{
+			font-size: 35px;
+			text-align: center;
+			color: #666;
+			/*text-shadow: 0 0 4px rgb(0,0,0);*/
+			font-family: 'Slabo ', serif;
+			/*font-weight: bold;*/
+			padding-top: 3vh;
+		}
+		.slots{
+			padding-left: 4vw;
+			color: #000;
+			font-size: 20px;
+		}
+		.mdl-button{
+			float: right;
+			margin-right: 10px;
+		}
+
+	 </style>
+</head>
+<body>
+	<div class="container">
+
+
+
+		<h1 class="heading">Book your appointment</h1>
+		<div class="form1">
+			<form action="{% url 'portal:home' %}" method="POST">
+			{% csrf_token %}
+			<p>
+				<div class="slots">
+
+					{% if slots %}
+						{% for x in slots %}
+							{% if x.is_free %}	
+					    		<p>
+							      <input name="slot_time" value="{{x.display}}" type="radio" id="{{forloop.counter}}" >
+							      <label for="{{forloop.counter}}"><b><font color="green">{{x.display}}</font></b></label>
+							    </p>
+							{% else %}
+								<p>
+							      <input type="radio" disabled="true" id="{{forloop.counter}}" >
+							      <label for="{{forloop.counter}}"><b><font color="red">{{x.display}}</font></b></label>
+							    </p>
+							{% endif %}
+						{% endfor %}
+						<input type="submit" value="Submit">
+
+				        <input type="hidden" value="{{admin.id}}" name="adminID">
+			            <input type="hidden" value="{{client.id}}" name="clientID"> 
+			            <input type="hidden" value="after_book" name="login_flag">
+						
+					{% else %}
+						<p>No time slot</p>
+			            <button onclick="goBack()">Back</button>
+
+			      	{% endif %}
+				
+				</div>
+			</p>
+			</form>
+        
+		</div>
+		<!-- <button  type="button" class="mdl-button">Confirm</button> -->
+		<!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="show-dialog" type="button">
+		  Confirm
+		</button> -->
+		<dialog class="mdl-dialog">
+	    <h4 class="mdl-dialog__title">Confirm Appintment</h4>
+	    <!-- <div class="mdl-dialog__content">
+	      <p>
+	        Confirm Appintment
+	      </p>
+	    </div> -->
+	    <div class="mdl-dialog__actions">
+	      <button type="button" id="show-dialog2" class="mdl-button mdl-js-button mdl-button--raised">ok</button>
+	      <button type="button" class="mdl-button close mdl-js-button mdl-button--raised">Cancel</button>
+	    </div>
+	  </dialog>
+	  <dialog class="mdl-dialog" id="dialog2">
+	    <h3 class="mdl-dialog__title">Appointment Confirmed</h3>
+	    <div class="mdl-dialog__content">
+	      <p>
+	        Your slot has been Booked. Be there!
+	      </p>
+	    </div>
+	    <div class="mdl-dialog__actions">
+	    	<button type="button" id="show-dialog3" class="mdl-button mdl-js-button mdl-button--raised ok">ok</button>
+	    </div>
+	   </dialog> 
+	</div>
+	<script>
+	    var dialog = document.querySelector('dialog');
+	    var showDialogButton = document.querySelector('#show-dialog');
+	    if (! dialog.showModal) {
+	      dialogPolyfill.registerDialog(dialog);
+	    }
+	    showDialogButton.addEventListener('click', function() {
+	      dialog.showModal();
+	    });
+	    dialog.querySelector('.close').addEventListener('click', function() {
+	      dialog.close();
+	    });
+	</script>
+
+	<script>
+		function goBack() {
+		    window.history.back();
+		}
+	</script>
+
+
+  </body>
+</html>
