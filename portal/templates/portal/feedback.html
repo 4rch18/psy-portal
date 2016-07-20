@@ -18,11 +18,18 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'portal/css/feedbackcomponent.css' %}" />
 
 		<script src="{% static 'portal/js/feedbackmodernizr.custom.js' %}" ></script>
-
+		<style type="text/css">
+		  @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+		  @import 'https://fonts.googleapis.com/css?family=Cormorant';
+		    body{
+		      background-color: #9999ff;
+		      font-family: 'Source Sans Pro', sans-serif;
+		    }
+		</style>
 	</head>
 	<body>
 		<div class="container">
-			<section>
+			<section style="box-shadow: 0 0 100px rgba(0,0,0,0.5);background-color: rgba(255,255,255,0.70); border-radius: 10px;">
 				<form id="theForm" class="simform" autocomplete="off">
 					<div class="simform-inner">
 						<ol class="questions">

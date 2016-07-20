@@ -1,36 +1,82 @@
-<div>
-	{% load staticfiles %}
-	<link rel="stylesheet" href="{% static 'portal/icon.css' %}">
-	<link rel="stylesheet" href="{% static 'portal/material.indigo-pink.min.css' %}">
-	<script defer src="{% static 'portal/material.min.js' %}"></script>
+<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<style type="text/css">
+  @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
+  @import 'https://fonts.googleapis.com/css?family=Cormorant';
+    body{
+      background-color: #9999ff;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    #login_text{
+        font-size: 30px;
+        font-family: 'Source Sans Pro', sans-serif;
+        margin-left: 2vw;
+        font-weight: bold;
+        margin-top: 60px;
+    }
+    #logout_link{
+        text-decoration: none;
+        color: #000;
+    }
+    a{
+        text-decoration: none;
+        font-size: 20px;
+        color: #000;
+    }
+    li{
+        text-decoration: none;
+        list-style: none;
+        display: block;
+    }
+    #usernames{
+        font-size: 30px;
+        margin-left: 2vw;
+        margin-top: 60px;
+    }
+    h6{
+        color: #fff;
+        font-size: 6px;
+        padding-top: 7px;
+    }
+    .mdl-js-button{
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    #main_div{
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        height: 120px;
+        width:400px;
+        border-radius: 10px;
+        padding:5px;
+    }
+</style>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" style="margin-top:-15px;">
+    <header class="mdl-layout__header" style="background-color: rgba(255,255,255,0.05);">
+        <div class="mdl-layout__header-row"  style="background-color: rgba(255,255,255,0.05);">
+            <span class="mdl-layout-title">Psychology Portal IIITD</span>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <form id="form1" action="{% url 'portal:home' %}" method="post">
+                    {% csrf_token %}
+                    <a class="mdl-navigation__link" href="javascript:;" onclick="document.getElementById('form1').submit();">Home</a>
+                    <input type="hidden" name="login_flag" value="redirect" >
+                    <input type="hidden" name="userID" value="{{user.id}}">
+                
+                </form>
 
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-	  <header class="mdl-layout__header" >
-	    <div class="mdl-layout__header-row">
-	      <span class="mdl-layout-title">Psychology Portal IIITD</span>
-	      <div class="mdl-layout-spacer"></div>
-	      <nav class="mdl-navigation mdl-layout--large-screen-only">
-	        
-	        <form id="form1" action="{% url 'portal:home' %}" method="post">
-	        	{% csrf_token %}
-			    <a class="mdl-navigation__link" href="javascript:;" onclick="document.getElementById('form1').submit();">Home</a>
-			    <input type="hidden" name="login_flag" value="redirect" >
-			    <input type="hidden" name="userID" value="{{user.id}}">
-			
-			</form>
-
-			<form id="form2" action="{% url 'portal:about' user.id %}" method="post">
-	        	{% csrf_token %}
-			    <a class="mdl-navigation__link" href="javascript:;" onclick="document.getElementById('form2').submit();">About</a>
-			
-			</form>
-	       
-
-	       	
-	       	
-	        <a class="mdl-navigation__link" href="https://accounts.google.com/login"><img src="{% static 'portal/gplus.png' %}" alt="login with google" style="width: 25px;"></img></a>
-	      </nav>
-	    </div>
-	  </header>
-	 </div>
+                <form id="form2" action="{% url 'portal:about' user.id %}" method="post">
+                    {% csrf_token %}
+                    <a class="mdl-navigation__link" href="javascript:;" onclick="document.getElementById('form2').submit();">About</a>
+                
+                </form>
+                <!-- <a class="mdl-navigation__link" href="https://mail.google.com/mail/u/0/#inbox"><img src="gplus3.png" alt="login with google" style="width: 25px;"></img></a> -->
+            </nav>
+        </div>
+    </header>
 </div>
+
+<br>
+<br>
+<br>
+<br>

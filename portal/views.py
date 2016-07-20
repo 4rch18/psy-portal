@@ -432,6 +432,8 @@ def chat(request, clientID, adminID):
     if str(request.session['user_id']) == str(clientID):
         currentClient=MyUser.objects.get(pk=clientID)
         currentAdmin=MyUser.objects.get(pk=adminID)
+        if(currentAdmin.is_admin == False):
+            return render(request, 'portal/error.html', {'err': 'Invalid authorization'})
         new_msg=request.POST.get('new_msg')
         date=datetime.now()
         if new_msg is not None and new_msg != '':
@@ -442,6 +444,7 @@ def chat(request, clientID, adminID):
         allQueries=Query.objects.filter(admin_id=adminID,client_id=clientID)
         allAdmins = MyUser.objects.filter(is_admin=True)
         context={
+            'user':currentClient,
             'sideList': allAdmins,
             'all':allQueries,
             'client':currentClient,
@@ -468,6 +471,8 @@ def admin_chat(request, clientID, adminID):
     if str(request.session['user_id']) == str(adminID):
         currentClient=MyUser.objects.get(pk=clientID)
         currentAdmin=MyUser.objects.get(pk=adminID)
+        if(currentClient.is_admin):
+            return render(request, 'portal/error.html', {'err': 'Invalid authorization'})
         new_msg=request.POST.get('new_msg')
         date=datetime.now()
         if new_msg is not None and new_msg != '':
@@ -478,6 +483,7 @@ def admin_chat(request, clientID, adminID):
         allQueries=Query.objects.filter(admin_id=adminID,client_id=clientID)
         allClients = MyUser.objects.filter(is_admin=False)
         context={
+            'user':currentAdmin,
             'sideList': allClients,
             'all':allQueries,
             'client':currentClient,
@@ -504,6 +510,8 @@ def book(request, clientID, adminID):
     if str(request.session['user_id']) == str(clientID):
         currentAdmin=MyUser.objects.get(pk=adminID)
         currentClient=MyUser.objects.get(pk=clientID)
+        if(currentAdmin.is_admin == False):
+            return render(request, 'portal/error.html', {'err': 'Invalid authorization'})
         office_hours=OfficeHour.objects.filter(admin=currentAdmin)
         time_slots=TimeSlot.objects.filter(office_hours=office_hours)
 
@@ -564,6 +572,8 @@ def call(request, clientID, adminID):
     if str(request.session['user_id']) == str(clientID):
         currentClient=MyUser.objects.get(pk=clientID)
         currentAdmin=MyUser.objects.get(pk=adminID)
+        if(currentAdmin.is_admin == False):
+            return render(request, 'portal/error.html', {'err': 'Invalid authorization'})
         context={
             'client':currentClient,
             'admin':currentAdmin,
@@ -587,6 +597,8 @@ def admin_call(request, clientID, adminID):
         return render(request, 'portal/error.html', context1)
     if str(request.session['user_id']) == str(adminID):
         currentClient=MyUser.objects.get(pk=clientID)
+        if(currentClient.is_admin):
+            return render(request, 'portal/error.html', {'err': 'Invalid authorization'})
         currentAdmin=MyUser.objects.get(pk=adminID)
         context={
             'client':currentClient,
@@ -782,3 +794,8 @@ def about(request, userID):
             'user': currentUser, 
         }
         return render(request, 'portal/about.html', context)
+    else:
+        context={
+            'err':'Invalid authorization'
+        }
+        return render(request, 'portal/error.html', context)

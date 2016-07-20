@@ -1,6 +1,27 @@
-{% if err%}<p>{{err}}</p>{%endif%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		h1{
+			color:white;
+			font-size:10vw;
+			text-shadow: 2px 2px #788881;
+			text-align: center;
+			margin-top: 15vw;
+		}
+		#link{
+			text-decoration: none;
+			color: white;
+			font-size: 3vw;
+		}
+	</style>
+</head>
+<body style="background-color:#7176e6;">
+{% if err%}<h1>{{err}}</h1>{%endif%}
 
 {% if link %}
-<a href="{% url link %}">GO!!!</a>
+<a href="{% url link %}" id="link">GO!!!</a>
 {% endif %}
-
+</body>
+</html>

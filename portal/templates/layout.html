@@ -9,14 +9,13 @@
     @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:600);
     @import 'https://fonts.googleapis.com/css?family=Cormorant';
 
+  body{
+    background-color: #9999ff;
 
-    body{
-      background-color: rgb(220,220,220);
-
-    }
-      .mdl-grid{
-        background-color: rgb(220,220,220);
-      }
+  }
+  .mdl-grid{
+    background-color: #9999ff;
+  }
       .demo-list {
         width: 650px;
       }
@@ -25,7 +24,7 @@
       width: 750px;
       height: 480px;
       margin: 0 auto;
-      margin-top: 0px;
+      margin-top: 30px;
     }
     .demo-card-wide > .mdl-card__title {
       color: #fff;
@@ -41,7 +40,7 @@
         
     }
     .mdl-textfield {
-        width: 650px;
+        width: 600px;
 
     }
     .mdl-button {
@@ -49,8 +48,8 @@
         margin-right: 0px;
     }
     .card2{
-        width: 650px;
-        height: 60px;
+        width: 750px;
+        height: 80px;    /*100*/
         margin-bottom:0px;
         min-height: 50px;
 
@@ -60,10 +59,14 @@
     }
     .card3{
         margin:0 auto;
-        margin-top: 0px;
+        margin-top: 30px;
         height: 480px;
         width: calc(20%);
         margin-right:calc(-10%);
+        box-shadow: 0 0 100px rgba(0,0,0,0.6);
+        float:left; margin-left:6vw;
+        border-radius: 10px;
+        background-color: rgba(255,255,255,0.95);
 
     }
     /*.mdl-card__title{
@@ -78,15 +81,31 @@
     .mdl-grid{
         margin-top: 40px; /*CHange to increase*/
     }
+    .card4{
+      box-shadow: 0 0 100px rgba(0,0,0,0.6);
+      float:right; margin-right:6vw;
+      border-radius: 10px;
+      background-color: rgba(255,255,255,0.95);
+    }
+    h6{
+      color: #fff;
+      font-size: 5px;
+      padding-top: 7px;
+    }
+    li{
+      list-style: none;
+    }
     </style>
 {% endblock %}
 
 {% block body %}
+
   <button onclick="goBack()">Back</button>
-    <div class="mdl-grid portfolio-max-width">
+    <div class="mdl-grid portfolio-max-width  mdl-cell mdl-cell--12-col mdl-cell--2-col-tablet mdl-card mdl-cell--15-col-desktop mdl-cell--7-col-phone">
     {% block grid %}    
-        <div class="mdl-grid mdl-cell mdl-cell--12-col mdl-cell--2-col-tablet mdl-card mdl-cell--15-col-desktop mdl-cell--7-col-phone"> <!-- chnged -->
-        <div class="mdl-card mdl-shadow--6dp card3 mdl-cell--3-col-tablet mdl-cell--2-col-phone mdl-cell--3-col-desktop" style="float:left; margin-left:6vw;">
+        <!-- header -->
+        <div class="mdl-grid mdl-cell mdl-cell--12-col mdl-cell--2-col-tablet mdl-card mdl-cell--15-col-desktop mdl-cell--7-col-phone"> 
+        <div class="mdl-card mdl-shadow--6dp card3 mdl-cell--3-col-tablet mdl-cell--2-col-phone mdl-cell--3-col-desktop">
               {% block card_left %}
                   <div class="mdl-card__title">
                     <h2 class="mdl-card__title-text">
@@ -123,11 +142,11 @@
                 {% endblock %}
             </div>
 
-            <div class="demo-card-wide mdl-card mdl-shadow--6dp mdl-cell mdl-cell--7-col-tablet mdl-cell--4-col-phone mdl-cell--10-col-desktop" style="float:right; margin-right:6vw;"> 
+            <div class="demo-card-wide mdl-card mdl-shadow--6dp mdl-cell mdl-cell--7-col-tablet mdl-cell--4-col-phone mdl-cell--10-col-desktop card4"> 
              {% block card_right %}
 
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text " style="color:black;">
+                    <div class="mdl-card__title" style="margin-top:2.5%;">
+                        <h2 class="mdl-card__title-text " style="color:black; ">
                           {% block card_right_title %}
 
                           {% endblock %}

@@ -1,11 +1,8 @@
-<!-- {% include "navbar.html" with user=client %} -->
+{% include "navbar.html" with user=client %}
 
-<br>
-<br>
-<br>
-<br>
-<p>Hello {{client.username}},{{message}} </p>
-<a href="{% url 'portal:logout' %}">Logout</a>
+
+<p id="login_text">Hello {{client.username}},{{message}} </p>
+
 <br>
 
 
@@ -15,25 +12,39 @@
     <ul>
     {% for x in all %}
         <li>
-        	{{x.username}}
-        	<a href="{% url 'portal:chat' client.id x.id%}">Chat</a>
-            <a href="{% url 'portal:call' client.id x.id%}">Call</a>
-            <a href="{% url 'portal:book' client.id x.id%}">Book</a>
-            {% if allAppointments %}
-                {% for y in allAppointments %}
-                    {% if x == y.admin %}
-                        {% if y.status == 'booked' %}
-                            Your appointment is at {{y.slot.display}}
-                        {% elif y.status == 'pending' %}
-                            Your request is pending
-                        {% else %}
-                            No appointment
+            <br>
+            <div id="main_div">
+        	<span id="usernames">{{x.username}}</span><br><br>
+            <div style="margin-left:5%">
+                <a href="{% url 'portal:chat' client.id x.id%}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" style=" background-color:#8533ff;">
+                    <i class="material-icons" style="color:#fff;"  >person_add</i>
+                    <h6>Chat</h6>
+                </a>
+                <a href="{% url 'portal:call' client.id x.id%}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" style=" background-color:#8533ff; margin-left:2%;">
+                    <i class="material-icons" style="color:#fff;">videocam</i>
+                    <h6>Call</h6>
+                </a>
+                <a href="{% url 'portal:book' client.id x.id%}" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" style=" background-color:#8533ff; margin-left:2%;">
+                    <i class="material-icons" style="color:#fff;"  >person_pin</i>
+                    <h6>Appointment</h6>
+                </a>
+                {% if allAppointments %}
+                    {% for y in allAppointments %}
+                        {% if x == y.admin %}
+                            {% if y.status == 'booked' %}
+                                Your appointment is at {{y.slot.display}}
+                            {% elif y.status == 'pending' %}
+                                Your request is pending
+                            {% else %}
+                                No appointment
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                No appointment
-            {% endif %}
+                    {% endfor %}
+                {% else %}
+                    No appointment
+                {% endif %}
+            </div>
+        	</div>
         </li>
     {% endfor %}
     </ul>
@@ -41,9 +52,10 @@
     <p>No admin</p>
 {% endif %}
 
-
-<a href="{% url 'portal:feedback' client.id %}">Feedback</a>
-
+<br>
+<br>
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="{% url 'portal:feedback' client.id %}" style="margin-left:5%; background-color:#8533ff; color:#fff;">Feedback</a>
+<a class="mdl-button mdl-js-button mdl-js-ripple-effect" id="logout_link" href="{% url 'portal:logout' %}" style="margin-left:5%; background-color:#8533ff; color:#fff;">Logout</a>
 <script>
 function goBack() {
     window.history.back();
